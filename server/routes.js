@@ -7,6 +7,7 @@ const CommentController = require("./controllers/comments");
 const UserController = require("./controllers/users");
 const VideoController = require("./controllers/videos");
 const SubController = require("./controllers/subs");
+const LikeController = require("./controllers/likes");
 
 router.post(
 	"/auth/registration",
@@ -35,8 +36,12 @@ router.get("/comments/", CommentController.GetComments);
 router.post("/comments/", CommentController.CreateComment);
 router.get("/comments/video/:id", CommentController.FindCommentsForVideo);
 
-router.post("/sub/", SubController.Follow);
-router.delete("/sub/", SubController.Unfollow);
-router.get("/sub/:id", SubController.GetSubscriptions);
+router.post("/subs/", SubController.Follow);
+router.delete("/subs/", SubController.Unfollow);
+router.get("/subs/:id", SubController.GetSubscriptions);
+
+router.post("/likes/", LikeController.Like);
+router.delete("/likes/", LikeController.DeleteLike);
+router.get("/likes/:videoId", LikeController.LikesUnderVideo);
 
 module.exports = router;
