@@ -1,0 +1,25 @@
+.uploadform {
+	margin-top: 60px;
+
+	padding-left: 10rem;
+	padding-right: 10rem;
+}
+
+.input {
+	width: 100%;
+	padding: 10px;
+	margin: 10px;
+	background-color: rgb(58, 58, 58);
+	border: none;
+	outline: none;
+}
+
+.btn {
+	width: 200px;
+	margin: 10px;
+	background-color: red;
+	outline: none;
+	border: none;
+	padding: 10px;
+	border-radius: 5px;
+}

@@ -1,0 +1,9 @@
+.comment {
+	display: flex;
+	margin: 10px;
+	align-items: center;
+}
+
+.name {
+	display: flex;
+}

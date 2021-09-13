@@ -1,0 +1,40 @@
+.video {
+	margin-top: 60px;
+}
+.content {
+	width: 100%;
+
+	height: 500px;
+}
+.wrapper {
+	margin-left: 10rem;
+	margin-right: 10rem;
+}
+
+.title {
+	margin-top: 20px;
+
+	display: flex;
+	justify-content: space-between;
+}
+
+.titleUI {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+@media screen and (max-width: 1024px) {
+	.content {
+		height: 250px;
+	}
+	.wrapper {
+		margin: 10px;
+	}
+	.title {
+		display: block;
+	}
+	.titleUI {
+		margin-top: 10px;
+	}
+}

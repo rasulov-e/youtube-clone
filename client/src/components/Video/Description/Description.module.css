@@ -1,0 +1,21 @@
+.description {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.authorData {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.openclose {
+	background: none;
+	border: none;
+	padding: 10px;
+}
+
+.text {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}

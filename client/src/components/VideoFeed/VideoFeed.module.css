@@ -1,0 +1,15 @@
+.videoFeed {
+	width: 100%;
+
+	display: grid;
+	grid-template-columns: repeat(auto-fit, 350px);
+	column-gap: 20px;
+}
+
+@media screen and (max-width: 900px) {
+	.videoFeed {
+		width: 100%;
+
+		display: block;
+	}
+}

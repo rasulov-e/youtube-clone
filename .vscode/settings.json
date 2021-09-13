@@ -1,0 +1,12 @@
+{
+	"sqltools.connections": [
+		{
+			"previewLimit": 50,
+			"driver": "SQLite",
+			"name": "test.db",
+			"database": "\\\\wsl$\\Ubuntu-20.04\\home\\enkidu\\dev\\web\\youtube-clone\\server\\test.db"
+		}
+	],
+	"sqltools.useNodeRuntime": true,
+	"git.ignoreLimitWarning": true
+}

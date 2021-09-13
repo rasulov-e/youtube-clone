@@ -1,0 +1,99 @@
+:root {
+	--navbar-color: rgba(33, 32, 33, 0.582);
+	--search-color: rgb(18, 18, 18);
+}
+.navbar {
+	height: 60px;
+	width: 100%;
+	z-index: 30;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: fixed;
+	/* 
+	padding-left: 10px;
+	padding-right: 20px; */
+
+	background-color: var(--navbar-color);
+}
+
+.logo {
+	display: flex;
+	align-items: center;
+	text-align: center;
+
+	color: white;
+
+	padding: 10px;
+}
+
+.search {
+	width: 700px;
+
+	display: flex;
+}
+
+.searchInput {
+	width: 80%;
+	background-color: var(--search-color);
+	border: none;
+	padding: 5px;
+}
+
+.searchBtn {
+	width: 20%;
+	background: none;
+	border: none;
+}
+
+.openSearchOnSmall {
+	display: none;
+}
+
+.user {
+	display: flex;
+	padding: 10px;
+}
+
+.closeSmallInput {
+	padding-left: 10px;
+	background: none;
+	border: none;
+}
+
+.smallSearch {
+	display: flex;
+	width: 80%;
+}
+
+/* sidebar styles */
+.sidebar {
+	width: 13rem;
+
+	background-color: var(--navbar-color);
+
+	position: fixed;
+	top: 60px;
+	bottom: 0;
+
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.lists {
+	padding: 10px;
+}
+.subscriptions {
+	padding: 10px;
+}
+
+@media screen and (max-width: 1024px) {
+	.search {
+		display: none !important;
+	}
+	.openSearchOnSmall {
+		display: block;
+		background: none;
+		border: none;
+	}
+}

@@ -1,0 +1,24 @@
+.home {
+	width: 100%;
+	display: flex;
+	overflow-x: hidden;
+}
+
+.mainContent {
+	width: 80%;
+	padding-top: 70px;
+	overflow-x: hidden;
+}
+
+.sideContent {
+	width: 20%;
+}
+
+@media screen and (max-width: 900px) {
+	.mainContent {
+		width: 100%;
+	}
+	.sideContent {
+		display: none !important;
+	}
+}
