@@ -13,6 +13,7 @@ class VideoController {
 			console.log(title, userId);
 
 			const now = new Date();
+
 			const newVideo = await db.query(
 				`INSERT INTO videos ( url, thumbnail, created_at, updated_at, user_id, title, description, views) VALUES ($1, $2, $3, $4, $5, $6, $7, 0) RETURNING *;`,
 				[
