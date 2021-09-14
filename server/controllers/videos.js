@@ -45,14 +45,31 @@ class VideoController {
 		res.status(201).send(videos.rows);
 	}
 
+	async getVideosOf(req, res) {
+		const { id } = req.params;
+		console.log(id);
+		const videos = await db.query(
+			`SELECT * FROM videos WHERE user_id = $1;`,
+			[id]
+		);
+
+		res.status(200).send(videos.rows);
+	}
+
 	async getVideoInfo(req, res) {
 		const { id } = req.params;
 
 		const video = await db.query(`SELECT * FROM videos WHERE id = $1`, [
 			id,
 		]);
+
 		if (video.rows[0]) {
+			const dbResponse = await db.query(
+				`UPDATE videos SET views = views + 1 WHERE id = $1;`,
+				[id]
+			);
 			res.send(video.rows[0]);
+			return;
 		}
 		res.status(400).send("video does not exits");
 	}
@@ -71,11 +88,6 @@ class VideoController {
 		);
 
 		if (videoUrl.rows[0]) {
-			const dbResponse = await db.query(
-				`UPDATE videos SET views = views + 1 WHERE id = $1;`,
-				[id]
-			);
-
 			// get video stats (about 61MB)
 			const videoPath = `../database/videos/${videoUrl.rows[0].url}`;
 			const videoSize = fs.statSync(videoPath).size;

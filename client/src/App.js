@@ -7,8 +7,15 @@ import Login from "./components/Login/Login/Login";
 import Navbar from "./components/Navbar/Navbar";
 import UploadForm from "./components/UploadForm/UploadForm";
 import Video from "./components/Video/Video";
+import { ping } from "./api/videos";
 
 const App = () => {
+	const fetchPing = async () => {
+		const response = await ping();
+		console.log(response);
+	};
+
+	fetchPing();
 	return (
 		<BrowserRouter>
 			<Navbar />
@@ -25,7 +32,7 @@ const App = () => {
 				<Route path="/login">
 					<Login />
 				</Route>
-				<Route path="/users">
+				<Route path="/users/:userId">
 					<UserProfile />
 				</Route>
 			</Switch>

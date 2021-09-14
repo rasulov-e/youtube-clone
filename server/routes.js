@@ -8,6 +8,7 @@ const UserController = require("./controllers/users");
 const VideoController = require("./controllers/videos");
 const SubController = require("./controllers/subs");
 const LikeController = require("./controllers/likes");
+const DislikeController = require("./controllers/dislikes");
 const AuthMiddleware = require("./middleware/auth");
 
 router.get("/ping/", AuthMiddleware, (req, res) => {
@@ -29,11 +30,12 @@ router.post(
 router.post("/auth/login", AuthController.login);
 
 // router.post("/user/", UserController.createUser);
-router.get("/user/:id/hero", UserController.serveThumbnail);
-router.get("/user/:id/avatar", UserController.serveProfilePicture);
+router.get("/users/:id/hero", UserController.serveThumbnail);
+router.get("/users/:id/avatar", UserController.serveProfilePicture);
 
 router.post("/videos/", AuthMiddleware, VideoController.createVideo);
 router.get("/videos/", VideoController.getVideos);
+router.get("/videos/users/:id", VideoController.getVideosOf);
 router.get("/videos/:id", VideoController.serveVideo);
 router.get("/videos/:id/videoInfo", VideoController.getVideoInfo);
 router.get("/videos/:id/thumbnail", VideoController.serveThumbnail);
@@ -48,6 +50,9 @@ router.get("/subs/:id", SubController.GetSubscriptions);
 
 router.post("/likes/", AuthMiddleware, LikeController.Like);
 router.delete("/likes/", AuthMiddleware, LikeController.DeleteLike);
-router.get("/likes/:videoId", LikeController.LikesUnderVideo);
+// router.get("/likes/:videoId", LikeController.LikesUnderVideo);
+
+router.post("/dislikes/", AuthMiddleware, DislikeController.Dislike);
+router.delete("/dislikes/", AuthMiddleware, DislikeController.DeleteDislike);
 
 module.exports = router;

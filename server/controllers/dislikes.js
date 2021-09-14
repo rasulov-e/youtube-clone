@@ -3,7 +3,19 @@ const db = require("../utils/database");
 class DislikeController {
 	async Dislike(req, res) {
 		try {
-			const { userId, videoId } = req.body;
+			const { videoId } = req.body;
+
+			const userId = req.body.user.id;
+
+			const check = await db.query(
+				`SELECT * FROM dislikes WHERE user_id = $1 AND video_id = $2;`,
+				[userId, videoId]
+			);
+
+			if (check.rows[0]) {
+				res.status(400).send("you already disliked this video");
+				return;
+			}
 
 			const response = await db.query(
 				`INSERT INTO dislikes (user_id, video_id) VALUES($1, $2);`,
@@ -28,7 +40,9 @@ class DislikeController {
 	}
 	async DeleteDislike(req, res) {
 		try {
-			const { userId, videoId } = req.body;
+			const { videoId } = req.body;
+
+			const userId = req.body.user.id;
 
 			const response = await db.query(
 				`DELETE FROM dislikes WHERE user_id = $1 AND video_id = $2;`,
