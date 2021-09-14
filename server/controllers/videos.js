@@ -3,34 +3,41 @@ const fs = require("fs");
 const db = require("../utils/database");
 class VideoController {
 	async createVideo(req, res) {
-		if (req.files) {
-			const video = req.files.video;
-			const thumbnail = req.files.thumbnail;
+		try {
+			if (req.files) {
+				const video = req.files.video;
+				const thumbnail = req.files.thumbnail;
 
-			video.mv("../database/videos/" + video.name);
-			thumbnail.mv("../database/thumbnails/" + thumbnail.name);
-			const { title, userId, description } = req.body;
-			console.log(title, userId);
+				video.mv("../database/videos/" + video.name);
+				thumbnail.mv("../database/thumbnails/" + thumbnail.name);
+				const { title, description } = req.body;
+				const userId = req.body.user.id;
 
-			const now = new Date();
+				const now = new Date();
 
-			const newVideo = await db.query(
-				`INSERT INTO videos ( url, thumbnail, created_at, updated_at, user_id, title, description, views) VALUES ($1, $2, $3, $4, $5, $6, $7, 0) RETURNING *;`,
-				[
-					video.name,
-					thumbnail.name,
-					now,
-					now,
-					userId,
-					title,
-					description,
-				]
-			);
+				const newVideo = await db.query(
+					`INSERT INTO videos ( url, thumbnail, created_at, updated_at, user_id, title, description, views, likes, dislikes) VALUES ($1, $2, $3, $4, $5, $6, $7, 0,0,0) RETURNING *;`,
+					[
+						video.name,
+						thumbnail.name,
+						now,
+						now,
+						userId,
+						title,
+						description,
+					]
+				);
+
+				if (newVideo.rowsAffected == 0) {
+					res.start(400).send("did not upload video");
+					return;
+				}
+			}
+			res.send("video was uploaded");
+		} catch (error) {
+			res.status(500).send(error);
+			console.log(error);
 		}
-
-		console.log(req.body);
-		console.log(req.files);
-		res.send("video was uploaded");
 	}
 
 	async getVideos(req, res) {

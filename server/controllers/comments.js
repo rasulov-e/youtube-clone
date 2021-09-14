@@ -12,9 +12,10 @@ class CommentController {
 		}
 	}
 	async CreateComment(req, res) {
-		console.log("creating comment");
 		try {
-			const { body, authorId, videoId } = req.body;
+			const { body, videoId } = req.body;
+
+			const authorId = req.body.user.id;
 
 			const now = new Date();
 
@@ -24,6 +25,11 @@ class CommentController {
 				VALUES ($1, $2, $3, $4);`,
 				[authorId, body, videoId, now]
 			);
+
+			if (response.rowsAffected == 0) {
+				res.status(500).send("did not create comment");
+				return;
+			}
 
 			res.status(200).send("comment was created");
 		} catch (error) {

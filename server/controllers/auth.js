@@ -44,7 +44,7 @@ class AuthController {
 
 				const now = new Date();
 
-				await db.query(
+				const response = await db.query(
 					`INSERT INTO public.users(
 				 username, password, email, created_at, updated_at, avatar, hero)
 				VALUES ($1, $2, $3, $4, $5, $6, $7);`,
@@ -58,11 +58,15 @@ class AuthController {
 						hero.name,
 					]
 				);
-			}
 
-			return res.json({
-				message: "Пользователь был успешно зарегистрирован",
-			});
+				if (response.rowsAffected == 0) {
+					res.status(400).send("did not resgistr");
+					return;
+				}
+				return res.json({
+					message: "Пользователь был успешно зарегистрирован",
+				});
+			}
 		} catch (error) {
 			console.log(error);
 			res.status(400).json({ message: "Registrations error" });

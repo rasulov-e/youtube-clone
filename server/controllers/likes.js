@@ -3,7 +3,19 @@ const db = require("../utils/database");
 class LikeController {
 	async Like(req, res) {
 		try {
-			const { userId, videoId } = req.body;
+			const { videoId } = req.body;
+
+			const userId = req.body.user.id;
+
+			const check = await db.query(
+				`SELECT * FROM likes WHERE user_id = $1 AND video_id = $2;`,
+				[userId, videoId]
+			);
+
+			if (check.rows[0]) {
+				res.status(400).send("this video is already liked by you");
+				return;
+			}
 
 			const response = await db.query(
 				`INSERT INTO likes (user_id, video_id) VALUES($1, $2);`,
@@ -28,7 +40,9 @@ class LikeController {
 	}
 	async DeleteLike(req, res) {
 		try {
-			const { userId, videoId } = req.body;
+			const { videoId } = req.body;
+
+			const userId = req.body.user.id;
 
 			const response = await db.query(
 				`DELETE FROM likes WHERE user_id = $1 AND video_id = $2;`,

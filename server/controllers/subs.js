@@ -3,7 +3,9 @@ const db = require("../utils/database");
 class SubController {
 	async Follow(req, res) {
 		try {
-			const { followerId, userId } = req.body;
+			const { userId } = req.body;
+
+			const followerId = req.body.user.id;
 
 			const response = await db.query(
 				`INSERT INTO subs(follower_id, user_id) VALUES($1, $2);`,
@@ -24,7 +26,9 @@ class SubController {
 	}
 	async Unfollow(req, res) {
 		try {
-			const { followerId, userId } = req.body;
+			const { userId } = req.body;
+
+			const followerId = req.body.user.id;
 
 			const response = await db.query(
 				`DELETE FROM subs WHERE follower_id = $1 AND user_id = $2;`,

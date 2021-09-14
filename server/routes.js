@@ -8,6 +8,12 @@ const UserController = require("./controllers/users");
 const VideoController = require("./controllers/videos");
 const SubController = require("./controllers/subs");
 const LikeController = require("./controllers/likes");
+const AuthMiddleware = require("./middleware/auth");
+
+router.get("/ping/", AuthMiddleware, (req, res) => {
+	console.log(req.body);
+	res.send(req.body);
+});
 
 router.post(
 	"/auth/registration",
@@ -22,26 +28,26 @@ router.post(
 );
 router.post("/auth/login", AuthController.login);
 
-router.post("/user/", UserController.createUser);
+// router.post("/user/", UserController.createUser);
 router.get("/user/:id/hero", UserController.serveThumbnail);
 router.get("/user/:id/avatar", UserController.serveProfilePicture);
 
-router.post("/videos/", VideoController.createVideo);
+router.post("/videos/", AuthMiddleware, VideoController.createVideo);
 router.get("/videos/", VideoController.getVideos);
 router.get("/videos/:id", VideoController.serveVideo);
 router.get("/videos/:id/videoInfo", VideoController.getVideoInfo);
 router.get("/videos/:id/thumbnail", VideoController.serveThumbnail);
 
 router.get("/comments/", CommentController.GetComments);
-router.post("/comments/", CommentController.CreateComment);
+router.post("/comments/", AuthMiddleware, CommentController.CreateComment);
 router.get("/comments/video/:id", CommentController.FindCommentsForVideo);
 
-router.post("/subs/", SubController.Follow);
-router.delete("/subs/", SubController.Unfollow);
+router.post("/subs/", AuthMiddleware, SubController.Follow);
+router.delete("/subs/", AuthMiddleware, SubController.Unfollow);
 router.get("/subs/:id", SubController.GetSubscriptions);
 
-router.post("/likes/", LikeController.Like);
-router.delete("/likes/", LikeController.DeleteLike);
+router.post("/likes/", AuthMiddleware, LikeController.Like);
+router.delete("/likes/", AuthMiddleware, LikeController.DeleteLike);
 router.get("/likes/:videoId", LikeController.LikesUnderVideo);
 
 module.exports = router;
