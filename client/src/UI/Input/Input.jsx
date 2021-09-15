@@ -1,7 +1,7 @@
 import React from "react";
 
-const Input = () => {
-	return <div></div>;
+const Input = (props) => {
+	return <input {...props} style={{width: "100%"}}></input>;
 };
 
 export default Input;

@@ -22,12 +22,16 @@ class AuthController {
 					.json({ message: "Ошибка при регистрации", errors });
 			}
 			const { username, password, email } = req.body;
+
+			if (!username || !password || !email) {
+				return res.status(400).send("incorrect input form");
+			}
 			const candidate = await db.query(
-				`SELECT username FROM users WHERE username = $1`,
+				`SELECT * FROM users WHERE username = $1`,
 				[username]
 			);
 
-			if (candidate.rows[0]) {
+			if (candidate.rows) {
 				return res.status(400).json({
 					message: "Пользователь с таким именем уже существует",
 				});
@@ -36,6 +40,10 @@ class AuthController {
 			if (req.files) {
 				const avatar = req.files.avatar;
 				const hero = req.files.hero;
+
+				if (!avatar || !hero) {
+					return res.status(400).send("incorrect body input form");
+				}
 
 				avatar.mv("../database/avatars/" + avatar.name);
 				hero.mv("../database/heros/" + hero.name);
@@ -63,9 +71,7 @@ class AuthController {
 					res.status(400).send("did not resgistr");
 					return;
 				}
-				return res.json({
-					message: "Пользователь был успешно зарегистрирован",
-				});
+				return res.send("you registered successfuly");
 			}
 		} catch (error) {
 			console.log(error);
@@ -75,15 +81,18 @@ class AuthController {
 	async login(req, res) {
 		try {
 			const { username, password } = req.body;
+			if (!username || !password) {
+				return res.status(400).send("incorrect input form");
+			}
 			const user = await db.query(
-				`SELECT id, username, password FROM users WHERE username = $1`,
+				`SELECT * FROM users WHERE username = $1`,
 				[username]
 			);
 
-			if (!user.rows[0]) {
-				return res
-					.status(400)
-					.json({ message: `Пользователь ${username} не найден` });
+			if (!user.rows) {
+				return res.json({
+					message: `Пользователь ${username} не найден`,
+				});
 			}
 			const validPassword = bcrypt.compareSync(
 				password,

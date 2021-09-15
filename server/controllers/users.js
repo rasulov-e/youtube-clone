@@ -34,6 +34,28 @@ class UserController {
 
 		// Stream the video chunk to the client
 	}
+	async serveMyAvatar(req, res) {
+		const { id } = req.body.user;
+
+		// get video stats (about 61MB)
+		const avatar = await db.query(
+			`SELECT avatar FROM users WHERE id = $1`,
+			[id]
+		);
+		const imagePath = `../database/avatars/${avatar.rows[0].avatar}`;
+
+		const headers = {
+			"Content-Type": "image/png",
+		};
+
+		// HTTP Status 206 for Partial Content
+		res.writeHead(206, headers);
+
+		// create video read stream for this particular chunk
+		const img = fs.readFileSync(imagePath);
+		res.end(img, "binary");
+	}
+
 	async serveProfilePicture(req, res) {
 		const { id } = req.params;
 

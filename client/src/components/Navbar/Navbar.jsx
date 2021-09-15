@@ -7,7 +7,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import classes from "./Navbar.module.css";
 import logo from "../../images/logo.png";
 
-const Navbar = () => {
+const Navbar = ({user}) => {
 	const [isSmallSearch, setisSmallSearch] = useState(true);
 
 	const handleisSmallSearch = () => {

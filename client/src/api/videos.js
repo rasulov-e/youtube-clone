@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:5000";
+import { url } from "./index";
 
 export const fetchVideos = () => axios.get(url + "/videos");
 export const uploadVideo = (formData) =>

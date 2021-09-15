@@ -1,24 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import UserProfile from "./components/UserProfile/UsersProfile";
 import Home from "./components/Home/Home";
-import Login from "./components/Login/Login/Login";
+import Signin from "./components/Auth/Signin/Signin";
 import Navbar from "./components/Navbar/Navbar";
 import UploadForm from "./components/UploadForm/UploadForm";
 import Video from "./components/Video/Video";
-import { ping } from "./api/videos";
+import Login from "./components/Auth/Login/Login";
 
 const App = () => {
-	const fetchPing = async () => {
-		const response = await ping();
-		console.log(response);
-	};
+	const [user, setUser] = useState({
+		isLoged: false,
+	});
 
-	fetchPing();
+	useEffect(() => {
+		if (localStorage.getItem("json-web-token")) {
+			setUser({ ...user, isLoged: true });
+		}
+	}, []);
 	return (
 		<BrowserRouter>
-			<Navbar />
+			<Navbar user={user} />
 			<Switch>
 				<Route path="/" exact>
 					<Home />
@@ -28,6 +31,9 @@ const App = () => {
 				</Route>
 				<Route path="/upload">
 					<UploadForm />
+				</Route>
+				<Route path="/signin">
+					<Signin />
 				</Route>
 				<Route path="/login">
 					<Login />

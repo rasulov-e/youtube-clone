@@ -1,0 +1,30 @@
+.signin {
+	margin-top: 60px;
+	margin-left: 10rem;
+	margin-right: 10rem;
+}
+
+.signin input {
+	background-color: rgb(58, 58, 58);
+	outline: none;
+	border: none;
+	width: 100%;
+	padding: 10px;
+	margin-top: 10px;
+}
+
+.signin button {
+	background-color: rgb(205, 1, 0);
+	border: none;
+	border-radius: 5px;
+	outline: none;
+
+	padding: 10px;
+	margin-top: 10px;
+}
+
+@media screen and (max-width: 600px) {
+	.signin {
+		margin: 60px 5px;
+	}
+}

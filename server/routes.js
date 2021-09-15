@@ -17,7 +17,7 @@ router.get("/ping/", AuthMiddleware, (req, res) => {
 });
 
 router.post(
-	"/auth/registration",
+	"/auth/registration/",
 	[
 		check("username", "The username cannot be empty").notEmpty(),
 		check(
@@ -32,6 +32,7 @@ router.post("/auth/login", AuthController.login);
 // router.post("/user/", UserController.createUser);
 router.get("/users/:id/hero", UserController.serveThumbnail);
 router.get("/users/:id/avatar", UserController.serveProfilePicture);
+router.get("/users/avatar", AuthMiddleware, UserController.serveMyAvatar);
 
 router.post("/videos/", AuthMiddleware, VideoController.createVideo);
 router.get("/videos/", VideoController.getVideos);
